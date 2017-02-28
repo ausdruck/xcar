@@ -19,12 +19,12 @@ $newcar = curl_exec($c);
 curl_close($c);
 
 // 抓取过来的页面转换为 utf-8 中文编码
-$newcar_u = iconv("GBK","UTF-8//IGNORE", $nc);
+$newcar_u = iconv("GBK","UTF-8//IGNORE", $newcar);
 
 // 全部点评开始
-$newcar_1 = explode('全部点评</a></div>', $nc_u);
+$newcar_1 = explode('全部点评</a></div>', $newcar_u);
 // 全部点评结束
-$newcar_2 = explode('<div class="pagers">', $nc_1[1]);
+$newcar_2 = explode('<div class="pagers">', $newcar_1[1]);
 
 // 测试解析后的内容
-echo $nc_2[0];
+echo $newcar_2[0];
