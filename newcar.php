@@ -2,8 +2,8 @@
 /**
   * @file 可以改成任意扩展名为 .php 的文件
   * @author 吴星(maasdruck@gmail.com)
-  * @date 2017/02/28
-  * @version v1.01
+  * @date 2017/03/01
+  * @version v1.02
   * @brief 抓取解析爱卡汽车口碑
   * @compatibility 支持 php 5.3 以上版本
   */
@@ -69,6 +69,10 @@ if ($sql_create_p == 'on') {
         id int not null primary key auto_increment,
         na_1s char(2) not null,
         na_2s char(2) not null,
+        na_3s varchar(63) not null,
+        na_4s varchar(31) not null,
+        na_5s varchar(63) not null,
+        na_6s varchar(31) not null,
         update_time datetime not null
     )";
     $ret = mysqli_query($con, $sql);
@@ -112,16 +116,37 @@ foreach ($newcar_3s as $newcar_3sk) {
     $newcar_5s = explode('】<a href="http://www.xcar.com.cn/', $newcar_4s[1]);
     $na_2s = substr($newcar_5s[0], 3);
     echo '&nbsp;'.$na_2s;
-    // echo '<hr>'.$newcar_5s[1];
+    $newcar_6s = explode('" target="_blank">', $newcar_5s[1]);
+    $na_3s = $newcar_6s[0];
+    echo '&nbsp;'.$na_3s;
+    $newcar_7s = explode('</a></dt>', $newcar_6s[1]);
+    $newcar_8s = explode(' ', $newcar_7s[0]);
+    $na_4s = $newcar_8s[0];
+    echo '&nbsp;'.$na_4s;
+    $na_5s = $newcar_8s[1];
+    echo '&nbsp;'.$na_5s;
+    $newcar_9s = explode('</a> 作者：', $newcar_6s[2]);
+    $na_6s = $newcar_9s[0];
+    echo '&nbsp;'.$na_6s;
+    echo '<hr>'.$newcar_9s[1];
+    echo '<hr>'.$newcar_7s[1];
     $update_time = date('Y-m-d H:i:s', time());
     $sql = "insert into xcar_newcar (
             na_1s,
             na_2s,
+            na_3s,
+            na_4s,
+            na_5s,
+            na_6s,
             update_time
         )
         values (
             '{$na_1s}',
             '{$na_2s}',
+            '{$na_3s}',
+            '{$na_4s}',
+            '{$na_5s}',
+            '{$na_6s}',
             '{$update_time}'
         )";
     if ($sql_write_p == 'on') {
